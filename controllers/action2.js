@@ -202,9 +202,9 @@ export const AzureCost = async(req,res) => {
 				// // Process the usage details as needed
 				// console.log("Usage details for billing period", billingPeriodName, ":", usageDetails);
 			} 
-			catch (error) {
+			catch (err) {
 				console.error("Error fetching Azure cost data:", error.message);
-				res.status(409).json({message:error})
+				res.status(409).json({message:err})
 			}
 		}
 
