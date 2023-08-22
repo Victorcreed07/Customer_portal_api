@@ -180,9 +180,9 @@ export const AzureCost = async(req,res) => {
 		console.log(`Total cost for the month: $${totalCost.toFixed(2)}`);
 		res.status(200).json({values:usageDetails,totalCost:totalCost})
       })
-      .catch(err => {
+      .catch(error => {
         // Handle errors here
-        console.error('Error:', err);
+        console.error('Error:', error);
 		res.status(409).json({message:error})
       });
   })
