@@ -20,7 +20,7 @@ const modeldata = new Action2Model({...data,creator:req.userid,createdAt: new Da
 
 	try{
 		await modeldata.save()
-		return res.status(200).json({message:'Data successfully posted'})
+		return res.status(200).json({message:'Data successfully postted'})
 	}
 	catch(error)
 	{
