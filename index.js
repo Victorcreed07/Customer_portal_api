@@ -7,6 +7,7 @@ import userroute from './routes/users.js'
 import actionroute from './routes/action.js'
 import action2route from './routes/action2.js'
 import actionzabbix from './routes/actionzabbix.js'
+import action3route from './routes/action3.js'
 
 
 // import postroute from './routes/post.js'
@@ -23,6 +24,7 @@ app.use('/user',userroute)
 app.use('/action',actionroute)
 app.use('/action2',action2route)
 app.use('/actionzabbix',actionzabbix)
+app.use('/action3',action3route)
 
 
 

@@ -3,13 +3,16 @@ import { ComputeManagementClient } from "@azure/arm-compute";
 import { ClientSecretCredential } from "@azure/identity";
 import { ConsumptionManagementClient } from "@azure/arm-consumption";
 import { BillingManagementClient }  from "@azure/arm-billing";
+import { BlobServiceClient } from  '@azure/storage-blob';
 import  {MonitorClient }  from "@azure/arm-monitor";
+import dotenv from 'dotenv';
+import ExcelJS from 'exceljs';
 
 
 import mongoose from 'mongoose'
 import axios from 'axios'
 
-
+dotenv.config();
 export const UploadDoc = async(req,res) => {
 
 	const data = req.body;
@@ -39,6 +42,73 @@ export const getDoc = async (req,res) => {
 	catch(error)
 	{
 		res.status(409).json({message:error})
+	}
+}
+
+export const AzureStorage = async(req,res) => {
+
+	const data = req.body;
+	console.log(data)
+
+	try{
+
+		
+		const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.FINANCE_SA);
+		const containers = [];
+		//container name
+		for await (const container of blobServiceClient.listContainers()) {
+		containers.push(container.name);
+		}
+		const containerClient = blobServiceClient.getContainerClient(data.val);
+    const files = [];
+	// file name
+    for await (const blob of containerClient.listBlobsFlat()) {
+      files.push({ name: blob.name });
+    }
+	//get file
+	const blobClient = containerClient.getBlobClient(files[0].name);
+
+    // const response = await blobClient.download();
+    // const chunks = [];
+    
+    // response.readableStreamBody.on("data", (chunk) => {
+    //   chunks.push(chunk);
+    // });
+	// let csvdata = null
+    // response.readableStreamBody.on("end", () => {
+    //   const text = Buffer.concat(chunks).toString();
+	//   csvdata = text
+    // //   res.json({ csvData: text });
+	// res.status(200).json({ containers,files,csvdata });
+    // });
+	const workbook = new ExcelJS.Workbook();
+
+// Read the Excel file from Azure Blob Storage
+blobClient.download().then(async (response) => {
+  const stream = response.readableStreamBody;
+
+  // Load the workbook from the stream
+  await workbook.xlsx.read(stream);
+
+  // Assuming the first sheet contains your data
+  const worksheet = workbook.getWorksheet(1);
+
+  // Extract data from the worksheet
+  const rows = [];
+  worksheet.eachRow((row, rowNumber) => {
+    rows.push(row.values);
+  });
+    
+  res.status(200).json({ containers,files,csvData: rows });	
+
+
+	})
+	
+}
+	catch(error){
+		console.error(error);
+    res.status(500).json({ error: error });
+
 	}
 }
 
@@ -471,4 +541,6 @@ axios.get(endpoint, {
 // }
 
 // 	}
+
+
 
