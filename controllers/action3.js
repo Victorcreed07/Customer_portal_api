@@ -38,3 +38,28 @@ export const GetFirewall = async(req,res) => {
 		res.status(500).json({message:'Something went wrong'})
 	}
 }
+
+
+export const GetChatResponse = async(req,res) => {
+
+	const { question } = req.body;
+
+
+	try{
+    const response = await axios.get(`https://chatresponse77.azurewebsites.net/api/response_trigger_77?message="${encodeURIComponent(question)}"`);
+    // Ensure the response is in the expected format
+    if (typeof response.data === 'string') {
+      res.json({ answer: { role: "bot", content: response.data } });
+      console.log(response.data);
+    } else {
+      res.json(response.data);
+    }
+    
+		
+	}
+	catch(error)
+	{
+		console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+	}
+}

@@ -66,21 +66,17 @@ export const AzureStorage = async(req,res) => {
       files.push({ name: blob.name });
     }
 	//get file
-	const blobClient = containerClient.getBlobClient(files[0].name);
-
-    // const response = await blobClient.download();
-    // const chunks = [];
-    
-    // response.readableStreamBody.on("data", (chunk) => {
-    //   chunks.push(chunk);
-    // });
-	// let csvdata = null
-    // response.readableStreamBody.on("end", () => {
-    //   const text = Buffer.concat(chunks).toString();
-	//   csvdata = text
-    // //   res.json({ csvData: text });
-	// res.status(200).json({ containers,files,csvdata });
-    // });
+	let blobClient
+	if(data.filename !== '')
+	{
+		 blobClient = containerClient.getBlobClient(data.filename);
+		 
+	}
+	else
+	{
+	
+	 blobClient = containerClient.getBlobClient(files[0].name);
+	}
 	const workbook = new ExcelJS.Workbook();
 
 // Read the Excel file from Azure Blob Storage
@@ -100,9 +96,13 @@ blobClient.download().then(async (response) => {
   });
     
   res.status(200).json({ containers,files,csvData: rows });	
-
+  
 
 	})
+	
+	
+		
+		
 	
 }
 	catch(error){
