@@ -65,6 +65,16 @@ export const AzureStorage = async(req,res) => {
     for await (const blob of containerClient.listBlobsFlat()) {
       files.push({ name: blob.name });
     }
+
+	//asociate filenames
+	const tempClient = BlobServiceClient.fromConnectionString(process.env.FINANCE_SA);
+	
+	const tempcontainClient = tempClient.getContainerClient(data.associate);
+    const filenames = [];
+	// file name
+    for await (const blob of tempcontainClient.listBlobsFlat()) {
+		filenames.push({ name: blob.name });
+    }
 	//get file
 	let blobClient
 	if(data.filename !== '')
@@ -95,7 +105,7 @@ blobClient.download().then(async (response) => {
     rows.push(row.values);
   });
     
-  res.status(200).json({ containers,files,csvData: rows });	
+  res.status(200).json({ containers,files,csvData: rows,filenames });	
   
 
 	})
