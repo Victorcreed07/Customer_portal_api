@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import axios from 'axios'
 
-
+// https://10.201.236.123/api/v2/cmdb/firewall/address?access_token=5kg7h3hpyy3dn5m47gsndgHgqNQpky
 
 dotenv.config();
 export const GetFirewall = async(req,res) => {
