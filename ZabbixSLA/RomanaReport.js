@@ -19,7 +19,7 @@ const RomanaReport = async () => {
 
     return {
       firstDayOfLastMonth: firstDayOfLastMonth,
-      lastDayOfLastMonth: lastDayOfPreviousMonth
+      lastDayOfLastMonth: firstDayOfCurrentMonth
     };
   }
 
@@ -501,6 +501,9 @@ const RomanaReport = async () => {
     version:"v1",
     reportName:`Romana-${lastMonthName} ${lastMonthYear}`,
     id:uuidv4(),
+    fromData:formattedFirstDayOfLastMonth,
+    toDate:formattedLastDayOfLastMonth,
+    titleCard:`${lastMonthName}-${lastMonthYear}`,
 }
 
 return romanaContent

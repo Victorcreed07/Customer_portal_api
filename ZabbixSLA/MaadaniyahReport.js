@@ -21,7 +21,7 @@ const MaadaniyahReport = async () => {
       
         return {
           firstDayOfLastMonth: firstDayOfLastMonth,
-          lastDayOfLastMonth: lastDayOfPreviousMonth
+          lastDayOfLastMonth: firstDayOfCurrentMonth
         };
       }
       
@@ -526,6 +526,9 @@ const MaadaniyahReport = async () => {
         version:"v1",
         reportName:`Maadaniyah-${lastMonthName} ${lastMonthYear}`,
         id:uuidv4(),
+        fromData:formattedFirstDayOfLastMonth,
+        toDate:formattedLastDayOfLastMonth,
+        titleCard:`${lastMonthName}-${lastMonthYear}`,
     }
 
     return maadaniayhContent

@@ -130,23 +130,18 @@ app.use('/action3',action3route)
 
 const port = 5000;
 
-mongoose.connect(process.env.CONNECTION_URL,{
-	useNewUrlParser:true,//just to avoid some warnings no big deal
-	useUnifiedTopology:true
+mongoose.connect(process.env.CONNECTION_URL, {
+  useNewUrlParser: true, // just to avoid some warnings, no big deal
+  useUnifiedTopology: true
 }).then(() => app.listen(port, () => {
-	console.log(`Server is running on http://localhost:${port}`);
-	// const tunnel = await localtunnel({ port: 5000 });
-	// console.log('Tunnel URL:', tunnel.url);
-	
-	//    tunnel.on('close', () => {
-	
-	// 	  console.log('Tunnel has been closed');
-	
-	// 	});
-	
-	 })).
-catch((e) => console.log(e))
+  console.log(`Server is running on http://localhost:${port}`);
+  // const tunnel = await localtunnel({ port: 5000 });
+  // console.log('Tunnel URL:', tunnel.url);
 
-// mongoose.set('useFindAndModify',false)
+  // tunnel.on('close', () => {
+  //   console.log('Tunnel has been closed');
+  // });
+
+})).catch((e) => console.log(e));
 
 

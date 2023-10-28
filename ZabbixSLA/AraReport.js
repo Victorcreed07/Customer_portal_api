@@ -20,7 +20,7 @@ const AraReport = async () => {
 
         return {
             firstDayOfLastMonth: firstDayOfLastMonth,
-            lastDayOfLastMonth: lastDayOfPreviousMonth
+            lastDayOfLastMonth: firstDayOfCurrentMonth
         };
     }
 
@@ -462,6 +462,9 @@ const AraReport = async () => {
     version:"v1",
     reportName:`Ara-${lastMonthName} ${lastMonthYear}`,
     id:uuidv4(),
+    fromData:formattedFirstDayOfLastMonth,
+    toDate:formattedLastDayOfLastMonth,
+    titleCard:`${lastMonthName}-${lastMonthYear}`,
 }
 
 return araContent

@@ -29,7 +29,7 @@ const TanmaiahReport = async() => {
   
     return {
       firstDayOfLastMonth: firstDayOfLastMonth,
-      lastDayOfLastMonth: lastDayOfPreviousMonth
+      lastDayOfLastMonth: firstDayOfCurrentMonth
     };
   }
   
@@ -511,7 +511,10 @@ const tanmaiahContent = {
     comment:"",
     version:"v1",
     reportName:`Tanmaiah-${lastMonthName} ${lastMonthYear}`,
-    id:uuidv4()
+    id:uuidv4(),
+    fromData:formattedFirstDayOfLastMonth,
+    toDate:formattedLastDayOfLastMonth,
+    titleCard:`${lastMonthName}-${lastMonthYear}`,
     
 }
 
