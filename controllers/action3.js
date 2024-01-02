@@ -28,20 +28,38 @@ export const GetFirewall = async(req,res) => {
 export const GetChatResponse = async(req,res) => {
 
 	const { question } = req.body;
-
+	
+	const data = {
+		user_input: question
+	  }
+	const url = 'http://localhost:8000/chat'
+	  console.log(question)
 
 	try{
-    const response = await axios.get(`https://chatresponse77.azurewebsites.net/api/response_trigger_77?message="${encodeURIComponent(question)}"`);
-    // Ensure the response is in the expected format
-    if (typeof response.data === 'string') {
-      res.json({ answer: { role: "bot", content: response.data } });
-      console.log(response.data);
-    } else {
-      res.json(response.data);
-    }
-    
+    // const response = await axios.post(`http://chatresponse77.azurewebsites.net/api/response_trigger_77?message="${encodeURIComponent(question)}"`);
+    // // Ensure the response is in the expected format
+    // if (typeof response.data === 'string') {
+    //   res.json({ answer: { role: "bot", content: response.data } });
+    //   console.log(response.data);
+    // } else {
+    //   res.json(response.data);
+    // }
+
+	
+    const response = await axios.post(url, data, {
+		headers: {
+		  'Content-Type': 'application/json',
+		  // Add any other headers if needed
+		},
+	  });
+  
+	//   if (typeof response.data.Response === 'string') {
+		res.json({ answer: { role: "bot", content: response.data.Response } });
+		console.log('Response:', response.data.Response);
+	  //}
+	} 
 		
-	}
+	
 	catch(error)
 	{
 		console.error('Error:', error);

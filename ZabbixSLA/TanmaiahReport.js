@@ -76,13 +76,24 @@ const TanmaiahReport = async() => {
 
   let service1 = {
     SPFMRNAPRDSQL: [],
-    SPFPOPRDNIMSH: [],
-    SPFPOPRDDISP: [],
-    SPFPOPRDJAVA: [],
-    SPFPOPRDGATEWAY: [],
-    SPFPOPRDSMTP: [],
-    SPFDMSPRDDMS: [], 
-    SPFPOWBISQL: [], 
+SPFPOPRDNIMSH: [],
+SPFPOPRDDISP: [],
+SPFPOPRDJAVA: [],
+SPFPOPRDGATEWAY: [],
+SPFPOPRDSMTP: [],
+SPFDMSPRDDMS: [],
+SPFPOWBISQL: [],
+SPFECCPRDORACLE: [/* array of objects matching '60753' */],
+SPFAPPRPRDHTTPS1: [/* array of objects matching '60792' */],
+SPFMRNAPRDSQL: [/* array of objects matching '53152' */],
+SPFPOPRDNIMSH: [/* array of objects matching '53106' */],
+SPFPOPRDDISP: [/* array of objects matching '53108' */],
+SPFPOPRDJAVA: [/* array of objects matching '53113' */],
+SPFPOPRDGATEWAY: [/* array of objects matching '53110' */],
+SPFPOPRDSMTP: [/* array of objects matching '53115' */],
+SPFDMSPRDDMS: [/* array of objects matching '53125' */],
+SPFPOWBISQL: [/* array of objects matching '53167' */],
+SPFECCPRDDISPATCHER: [/* array of objects matching '60750' */],
   };
 
   let tanmiah = {
@@ -182,10 +193,7 @@ const TanmaiahReport = async() => {
     method: "trend.get",
     params: {
       output: "extend",
-      itemids: [
-        "53167", "53125", "53115",
-        "53110", "53113", "53108", "53106", "53152"
-      ],
+      itemids: ["60795", "60797", "60802", "60752", "53125", "60269", "60753", "60792", "53152", "60793", "60751", "53167", "53115", "53110", "53113", "53108", "60803", "53106", "60750"],
       time_from: from ? from : '1693566435',
       time_till: to ? to : '1695208035',
     },
@@ -266,17 +274,37 @@ const TanmaiahReport = async() => {
             service1 = await {
               ...service1,
               
-              SPFPOWBISQL:await tandata.filter((i) => i.itemid === '53167'),
-              SPFDMSPRDDMS:await tandata.filter((i) => i.itemid === '53125'),
-              SPFPOPRDSMTP:await tandata.filter((i) => i.itemid === '53115'), 
-              SPFPOPRDGATEWAY:await tandata.filter((i) => i.itemid === '53110'),
-              SPFPOPRDJAVA:await tandata.filter((i) => i.itemid === '53113'),
-              SPFPOPRDDISP:await tandata.filter((i) => i.itemid === '53108'),
-              SPFPOPRDNIMSH:await tandata.filter((i) => i.itemid === '53106'),       
-              SPFMRNAPRDSQL:await tandata.filter((i) => i.itemid === '53152'),
-            };
+            //   SPFPOWBISQL:await tandata.filter((i) => i.itemid === '53167'),
+            //   SPFDMSPRDDMS:await tandata.filter((i) => i.itemid === '53125'),
+            //   SPFPOPRDSMTP:await tandata.filter((i) => i.itemid === '53115'), 
+            //   SPFPOPRDGATEWAY:await tandata.filter((i) => i.itemid === '53110'),
+            //   SPFPOPRDJAVA:await tandata.filter((i) => i.itemid === '53113'),
+            //   SPFPOPRDDISP:await tandata.filter((i) => i.itemid === '53108'),
+            //   SPFPOPRDNIMSH:await tandata.filter((i) => i.itemid === '53106'),       
+            //   SPFMRNAPRDSQL:await tandata.filter((i) => i.itemid === '53152'),
+            
+            SPFEYPRDHTTP:await tandata.filter((i) => i.itemid === '60795'),
+SPFTAXPRDHTTP:await tandata.filter((i) => i.itemid === '60797'),
+SPFTAXDBPRDPOSTGRES:await tandata.filter((i) => i.itemid === '60802'),
+SPFECCPRDMESSAGE:await tandata.filter((i) => i.itemid === '60752'),
+SPFDMSPRDDMS:await tandata.filter((i) => i.itemid === '53125'),
+SPFPOPRDDATABASE:await tandata.filter((i) => i.itemid === '60269'),
+SPFECCPRDORACLE:await tandata.filter((i) => i.itemid === '60753'),
+SPFAPPRPRDHTTPS1:await tandata.filter((i) => i.itemid === '60792'),
+SPFMRNAPRDSQL:await tandata.filter((i) => i.itemid === '53152'),
+SPFAPPRPRDHTTPS2:await tandata.filter((i) => i.itemid === '60793'),
+SPFECCPRDGATEWAY:await tandata.filter((i) => i.itemid === '60751'),
+SPFPOWBISQL:await tandata.filter((i) => i.itemid === '53167'),
+SPFPOPRDSMTP:await tandata.filter((i) => i.itemid === '53115'),
+SPFPOPRDGATEWAY:await tandata.filter((i) => i.itemid === '53110'),
+SPFPOPRDJAVA:await tandata.filter((i) => i.itemid === '53113'),
+SPFPOPRDDISP:await tandata.filter((i) => i.itemid === '53108'),
+SPFTAXDBPRDSSH:await tandata.filter((i) => i.itemid === '60803'),
+SPFPOPRDNIMSH:await tandata.filter((i) => i.itemid === '53106'),
+SPFECCPRDDISPATCHER:await tandata.filter((i) => i.itemid === '60750')
 
 
+            }
             console.log("-------service1------")
             console.log(service1.SPFPOWBISQL)
        
@@ -409,7 +437,7 @@ const TanmaiahReport = async() => {
     // if(arr3?.length === 17 || arr3?.length === 11)
     if (param2 === 'last') {
 
-      arr3 = arr3.slice(-8)
+      arr3 = arr3.slice(-19)
 
       const sum = arr3.reduce((accumulator, currentValue) => accumulator + currentValue);
       average2 = sum / arr3?.length;
@@ -430,14 +458,25 @@ const TanmaiahReport = async() => {
         await CreateTable(tanmiah.TaxPrd)
         await CreateTable(tanmiah.EccPrd,'last')
 
-        await CreateTable2(service1.SPFPOWBISQL);
+        await CreateTable2(service1.SPFAPPRPRDHTTPS1);
+        await CreateTable2(service1.SPFAPPRPRDHTTPS2);
         await CreateTable2(service1.SPFDMSPRDDMS);
+        await CreateTable2(service1.SPFECCPRDMESSAGE);
+        await CreateTable2(service1.SPFECCPRDORACLE);
+        await CreateTable2(service1.SPFECCPRDGATEWAY);
+        await CreateTable2(service1.SPFECCPRDDISPATCHER);
+        await CreateTable2(service1.SPFEYPRDHTTP);
+        await CreateTable2(service1.SPFMRNAPRDSQL);
+        await CreateTable2(service1.SPFPOPRDDATABASE);
         await CreateTable2(service1.SPFPOPRDSMTP);
         await CreateTable2(service1.SPFPOPRDGATEWAY);
         await CreateTable2(service1.SPFPOPRDJAVA);
         await CreateTable2(service1.SPFPOPRDDISP);
         await CreateTable2(service1.SPFPOPRDNIMSH);
-        await CreateTable2(service1.SPFMRNAPRDSQL,'last');
+        await CreateTable2(service1.SPFPOWBISQL);
+        await CreateTable2(service1.SPFTAXDBPRDPOSTGRES);
+        await CreateTable2(service1.SPFTAXDBPRDSSH);
+        await CreateTable2(service1.SPFTAXPRDHTTP,'last');
 
 
 
